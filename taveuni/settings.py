@@ -25,7 +25,7 @@ SECRET_KEY = '_95tdwoahuqttl$eh5*uhgu&h!997=zzayqdl+u0x-@z(j@w9l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+START_APPS = [
+    'article',
+]
+
+INSTALLED_APPS += START_APPS
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
+]
+
+INSTALLED_APPS += THIRD_PARTY_APPS
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,6 +62,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'taveuni.urls'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'NON_FIELD_ERRORS_KEY': 'error_code',  # RESPONSE/ERROR RENDERING
+}
+
 
 TEMPLATES = [
     {
@@ -118,3 +138,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+ENV = os.getenv('ENV')
+if ENV == 'local':
+    MIDDLEWARE += ['qinspect.middleware.QueryInspectMiddleware']
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    from .debug_settings import *
+elif ENV == 'prod':
+    DEBUG = False
+    from taveuni.development_settings import *
+else:
+    DEBUG = True
+    from taveuni.development_settings import *
