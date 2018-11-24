@@ -23,9 +23,11 @@ from article.views import views
 
 router = routers.DefaultRouter()
 router.register(r'article', views.ArticleViewSet)
+router.register(r'article', views.ArticleViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('article', TemplateView.as_view(template_name='article/templates/index.html')),
+    path('game', TemplateView.as_view(template_name='article/templates/index.html')),
 ]

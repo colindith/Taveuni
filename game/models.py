@@ -1,4 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+
+class Game(models.Model):
+    """
+    @class Game
+    @brief
+        Game Model, associate all game related models
+    """
+    user = models.OneToOneField(User, related_name='game', on_delete=models.CASCADE)
+    map = models.OneToOneField('Map',
+                               related_name='game',
+                               on_delete=models.CASCADE)
+
+
+class Map(models.Model):
+    """
+    @class Map
+    @brief
+        Map Model, associate all game related models
+    """
 
 
 class Cell(models.Model):
@@ -25,7 +46,7 @@ class Cell(models.Model):
     position_x = models.IntegerField()
     position_y = models.IntegerField()
     type = models.IntegerField(default=UNDEFINED, choices=CELL_TYPE)
-    crop = models.OneToOneField('Crop', related_name='cells', null=True, blank=True)
+    crop = models.OneToOneField('Crop', related_name='cells', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Cell'
@@ -59,7 +80,7 @@ class Crop(models.Model):
 
     class Meta:
         verbose_name = 'Plan'
-        ordering = ['game']
+        ordering = ['-created_at']
 
 
 class CropSpecies(models.Model):
@@ -71,7 +92,7 @@ class CropSpecies(models.Model):
     base_ripening_age = models.IntegerField(default=100)
     base_growing_speed = models.FloatField(default=1.0)
 
-    reward_choices = models.ManyToManyField(related_name='plans', to='game.Bet', through='CropSpeciesRewardDetail')
+    reward_choices = models.ManyToManyField(related_name='crop_species', to='game.Item', through='CropSpeciesRewardDetail')
 
 
 class Item(models.Model):
@@ -107,7 +128,9 @@ class ItemPrototype(models.Model):
 
 
 class CropSpeciesRewardDetail(models.Model):
-    crop_species = models.ForeignKey('CropSpecies', related_name='reward_cropses', on_delete=models.CASCADE)
+    crop_species = models.ForeignKey('CropSpecies',
+                                     related_name='reward_cropses',
+                                     on_delete=models.CASCADE)
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     weight = models.IntegerField(default=1)
 
