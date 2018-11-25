@@ -12,8 +12,6 @@ from game.models import Cell
 from game.serializers.serializers import CellSerializer
 
 
-# class
-
 class CellViewSet(viewsets.ModelViewSet):
     queryset = Cell.objects.all()
     serializer_class = CellSerializer
