@@ -95,38 +95,6 @@ class CropSpecies(models.Model):
     reward_choices = models.ManyToManyField(related_name='crop_species', to='game.Item', through='CropSpeciesRewardDetail')
 
 
-class Item(models.Model):
-    """
-    @class Item
-    @brief
-        Item Model
-    """
-    prototype = models.ForeignKey('ItemPrototype', related_name='items', on_delete=models.CASCADE)
-
-
-
-
-class ItemPrototype(models.Model):
-    """
-    @class ItemPrototype
-    @brief
-        ItemPrototype Model
-    """
-    UNDEFINED = 0
-    SEED = 1
-    RESOURCE = 2
-    KIT = 3
-    TYPE_OPTIONS = (
-        (UNDEFINED, 'Undefined'),
-        (SEED, 'Seed'),
-        (RESOURCE, 'Resource'),
-        (KIT, 'Kit'),
-    )
-    name = models.CharField(max_length=40, unique=False)
-    code = models.CharField(max_length=40, unique=True)
-    type = models.IntegerField(default=UNDEFINED, choices=TYPE_OPTIONS)
-
-
 class CropSpeciesRewardDetail(models.Model):
     crop_species = models.ForeignKey('CropSpecies',
                                      related_name='reward_cropses',

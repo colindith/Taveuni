@@ -1,5 +1,4 @@
 Vue.http.headers.common['X-CSRFToken'] = csrf_token;
-console.log(myHeaders)
 const app = new Vue({
   el: "#app",
   data: {
@@ -35,7 +34,7 @@ const app = new Vue({
       <li v-for="friend, i in friends">
         {{ friend }}
         <div v-if="editFriend === friend.article_id">
-          <input v-model="friend.article_heading" />
+          <input v-on:keyup.13="updateFriend" v-model="friend.article_heading" />
           <button v-on:click="updateFriend(friend)">save</button>
         </div>
         <div v-else>
