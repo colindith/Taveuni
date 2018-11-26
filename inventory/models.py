@@ -33,3 +33,13 @@ class ItemPrototype(models.Model):
     type = models.IntegerField(default=UNDEFINED, choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
+
+
+class Inventory(models.Model):
+    max_slot = models.IntegerField(default=8)
+
+
+class Slot(models.Model):
+    inventory = models.ForeignKey(Inventory, related_name='slots', on_delete=models.CASCADE)
+    item = models.OneToOneField(Item, related_name='slot', blank=True, null=True,
+                                on_delete=models.CASCADE)
