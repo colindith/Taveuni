@@ -43,6 +43,8 @@ START_APPS = [
     'article',
     'game',
     'user',
+    'inventory',
+    'map',
 ]
 
 INSTALLED_APPS += START_APPS
