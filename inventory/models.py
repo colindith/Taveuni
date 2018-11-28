@@ -5,14 +5,14 @@ from django.contrib.postgres import fields as postgres_fields
 class ItemPrototype(models.Model):
 
     name = models.CharField(max_length=40, unique=False)
-    code = models.CharField(max_length=40, unique=True)
+    code = models.CharField(max_length=40, unique=False)
     type = models.IntegerField(default='Item.UNDEFINED', choices='Item.TYPE_OPTIONS')
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
     display_fields = postgres_fields.JSONField(null=True, blank=True)
 
     # generator will create and return an item instance accourding to rules
-    generator = models.CharField(max_length=255)
+    generator = models.CharField(max_length=255, null=True, blank=True)
     rules = postgres_fields.JSONField(null=True, blank=True)
 
     def generate_item(self):
@@ -43,7 +43,7 @@ class Item(models.Model):
     )
 
     name = models.CharField(max_length=40, unique=False)
-    code = models.CharField(max_length=40, unique=True)
+    code = models.CharField(max_length=40, unique=False)
     type = models.IntegerField(default=UNDEFINED, choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)

@@ -38,7 +38,7 @@ class Cell(models.Model):
 
     class Meta:
         verbose_name = 'Cell'
-        unique_together = ('position_x', 'position_y')
+        unique_together = ('map', 'position_x', 'position_y')
 
     def is_blank_cell(self):
         if not self.crop:

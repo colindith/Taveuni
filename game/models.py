@@ -27,11 +27,12 @@ class CropSpecies(models.Model):
         CropSpecies Model
     """
     name = models.CharField(max_length=40)
+    code = models.CharField(max_length=40)
     base_ripening_age = models.IntegerField(default=100)
     base_growing_speed = models.FloatField(default=1.0)
 
     reward_choices = models.ManyToManyField(related_name='crop_species', to=ItemPrototype, through='CropSpeciesRewardDetail')
-    reward_generator = models.CharField(max_length=255)
+    reward_generator = models.CharField(max_length=255, null=True, blank=True)
 
     def create_crop(self):
         crop_dict = {
