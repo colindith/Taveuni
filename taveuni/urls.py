@@ -34,5 +34,7 @@ urlpatterns = [
 urlpatterns += [
     path('api/', include(router.urls)),
     path('article/', include('article.urls')),
-    path('inventory/', include('inventory.urls'))
+    path('game/', include('game.urls')),
+    path('inventory/', include('inventory.urls')),
+    path('map/', include('map.urls'))
 ]

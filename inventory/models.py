@@ -1,12 +1,24 @@
 from django.db import models
 from django.contrib.postgres import fields as postgres_fields
 
+UNDEFINED = 0
+SEED = 1
+RESOURCE = 2
+KIT = 3
+FRUIT = 4
+TYPE_OPTIONS = (
+    (UNDEFINED, 'Undefined'),
+    (SEED, 'Seed'),
+    (RESOURCE, 'Resource'),
+    (KIT, 'Kit'),
+    (FRUIT, 'fruit'),
+)
 
 class ItemPrototype(models.Model):
 
-    name = models.CharField(max_length=40, unique=False)
-    code = models.CharField(max_length=40, unique=False)
-    type = models.IntegerField(default='Item.UNDEFINED', choices='Item.TYPE_OPTIONS')
+    name = models.CharField(max_length=40)
+    code = models.CharField(max_length=40)
+    type = models.IntegerField(default='Item.UNDEFINED', choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
     display_fields = postgres_fields.JSONField(null=True, blank=True)
@@ -29,21 +41,8 @@ class Item(models.Model):
         Item Model, Real Item Instances
     """
 
-    UNDEFINED = 0
-    SEED = 1
-    RESOURCE = 2
-    KIT = 3
-    FRUIT = 4
-    TYPE_OPTIONS = (
-        (UNDEFINED, 'Undefined'),
-        (SEED, 'Seed'),
-        (RESOURCE, 'Resource'),
-        (KIT, 'Kit'),
-        (FRUIT, 'fruit'),
-    )
-
-    name = models.CharField(max_length=40, unique=False)
-    code = models.CharField(max_length=40, unique=False)
+    name = models.CharField(max_length=40, unique=False, default='none')
+    code = models.CharField(max_length=40, unique=False, default='none')
     type = models.IntegerField(default=UNDEFINED, choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
@@ -52,7 +51,7 @@ class Item(models.Model):
 
 
 class SeedItem(Item):
-    crop_species = models.ForeignKey('CropSpecies', on_delete=models.CASCADE)
+    crop_species = models.ForeignKey('game.CropSpecies', on_delete=models.CASCADE)
 
 
 class Inventory(models.Model):

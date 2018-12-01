@@ -10,8 +10,15 @@ from django.db import transaction
 from game.utils import load_class
 from map.models import Map, Cell
 from inventory.models import Slot, SeedItem
+from map.serializers.serializers import CellSerializer
 
 logger = logging.getLogger(__name__)
+
+
+class CellViewSet(viewsets.ModelViewSet):
+    # TODO: This view set should only return those cells belong to the user
+    queryset = Cell.objects.all()
+    serializer_class = CellSerializer
 
 
 @api_view(['POST'])

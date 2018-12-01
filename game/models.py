@@ -1,9 +1,8 @@
 from django.db import models
-from user.models import User
+# from user.models import User
 
 
 from inventory.models import Item, ItemPrototype
-from map.models import Map
 from game.utils import load_class
 
 
@@ -97,8 +96,8 @@ class CropSpeciesRewardDetail(models.Model):
     crop_species = models.ForeignKey(CropSpecies,
                                      related_name='reward_cropses',
                                      on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item_prototype = models.ForeignKey(ItemPrototype, on_delete=models.CASCADE)
     weight = models.IntegerField(default=1)
 
     class Meta:
-        unique_together = ('crop_species', 'item')
+        unique_together = ('crop_species', 'item_prototype')

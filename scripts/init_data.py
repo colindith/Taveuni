@@ -68,15 +68,31 @@ def create_crop():
 
 
 def create_item_prototype():
-    item_prototype_dict = {
-        'name': '青龍偃月刀',
-        'code': 'long_sword_001',
-        'type': Item.KIT,
-        'store_price': 1000,
-        'sold_price': 500,
+    item_prototype_list = [
+        {
+            'name': '青龍偃月刀',
+            'code': 'long_sword_001',
+            'type': Item.KIT,
+            'store_price': 1000,
+            'sold_price': 500,
 
-    }
-    ItemPrototype.objects.create(**item_prototype_dict)
+        }, {
+            'name': '向日葵種子',
+            'code': 'seed_001',
+            'type': Item.SEED,
+            'store_price': 2000,
+            'sold_price': 1000,
+        }, {
+            'name': '葡萄種子',
+            'code': 'seed_002',
+            'type': Item.SEED,
+            'store_price': 2000,
+            'sold_price': 1000,
+        }
+    ]
+    ItemPrototype.objects.bulk_create(
+        [ItemPrototype(**item_prototype_dict) for item_prototype_dict in item_prototype_list]
+    )
 
 
 def create_item():
@@ -87,13 +103,13 @@ def create_item():
             'type': Item.KIT,
             'store_price': 1000,
             'sold_price': 500,
-        },{
+        }, {
             'name': '向日葵種子',
             'code': 'seed_001',
             'type': Item.SEED,
             'store_price': 2000,
             'sold_price': 1000,
-        },{
+        }, {
             'name': '葡萄種子',
             'code': 'seed_002',
             'type': Item.SEED,
@@ -110,10 +126,10 @@ def create_crop_reward_detail():
     reward_list = [
         {
             'crop_species': CropSpecies.objects.get(code='flower_001'),
-            'item': Item.objects.get(code='seed_001'),
+            'item_prototype': ItemPrototype.objects.get(code='seed_001'),
         }, {
             'crop_species': CropSpecies.objects.get(code='fluit_001'),
-            'item': Item.objects.get(code='seed_002')
+            'item_prototype': ItemPrototype.objects.get(code='seed_002')
         }
     ]
     CropSpeciesRewardDetail.objects.bulk_create([
