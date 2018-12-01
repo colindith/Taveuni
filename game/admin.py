@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from game.models import Crop, CropSpecies
+
+
+admin.site.register(Crop)
+admin.site.register(CropSpecies)

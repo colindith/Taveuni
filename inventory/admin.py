@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from inventory.models import ItemPrototype, Item
+
+
+admin.site.register(Item)
+admin.site.register(ItemPrototype)

@@ -1,7 +1,7 @@
 import logging
 
 from map.models import Map, Cell
-from inventory.models import Inventory, Slot, Item, ItemPrototype
+from inventory.models import Inventory, Slot, Item, ItemPrototype, KIT, SEED
 from game.models import Crop, CropSpecies, CropSpeciesRewardDetail
 
 logger = logging.getLogger(__name__)
@@ -62,7 +62,7 @@ def create_crop_species():
 
 def create_crop():
     cs_names = ['向日葵', '葡萄']
-    cs_list = list(CropSpecies.objects.filter(name__in=cs_names).distict('name'))
+    cs_list = list(CropSpecies.objects.filter(name__in=cs_names).distinct('name'))
     for cs in cs_list:
         cs.create_crop()
 
@@ -72,20 +72,20 @@ def create_item_prototype():
         {
             'name': '青龍偃月刀',
             'code': 'long_sword_001',
-            'type': Item.KIT,
+            'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
 
         }, {
             'name': '向日葵種子',
             'code': 'seed_001',
-            'type': Item.SEED,
+            'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
         }, {
             'name': '葡萄種子',
             'code': 'seed_002',
-            'type': Item.SEED,
+            'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
         }
@@ -100,19 +100,19 @@ def create_item():
         {
             'name': '青龍偃月刀',
             'code': 'long_sword_001',
-            'type': Item.KIT,
+            'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
         }, {
             'name': '向日葵種子',
             'code': 'seed_001',
-            'type': Item.SEED,
+            'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
         }, {
             'name': '葡萄種子',
             'code': 'seed_002',
-            'type': Item.SEED,
+            'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
         }
@@ -133,7 +133,7 @@ def create_crop_reward_detail():
         }
     ]
     CropSpeciesRewardDetail.objects.bulk_create([
-        CropSpeciesRewardDetail(reward_dict) for reward_dict in reward_list
+        CropSpeciesRewardDetail(**reward_dict) for reward_dict in reward_list
     ])
 
 

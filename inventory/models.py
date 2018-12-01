@@ -99,7 +99,7 @@ class Inventory(models.Model):
 
     def is_not_full(self):
         # return False if there is no blank slot, else return the first blank slot
-        first_blank_slot = self.slots.all().filter(item__isnull=True).order_by(id).first()
+        first_blank_slot = self.slots.all().filter(item__isnull=True).order_by('id').first()
         if first_blank_slot:
             return first_blank_slot
         return False
