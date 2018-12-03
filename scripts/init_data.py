@@ -1,7 +1,7 @@
 import logging
 
 from map.models import Map, Cell
-from inventory.models import Inventory, Slot, Item, ItemPrototype, KIT, SEED, SeedItem
+from inventory.models import Inventory, Slot, Item, ItemPrototype, KIT, SEED
 from game.models import Crop, CropSpecies, CropSpeciesRewardDetail
 
 logger = logging.getLogger(__name__)
@@ -103,28 +103,25 @@ def create_item():
             'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
-        }
-    ]
-    Item.objects.bulk_create(
-        [Item(**item_dict) for item_dict in item_list]
-    )
-
-    seed_item_list = [{
+        }, {
             'name': '向日葵種子',
             'code': 'seed_001',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
+            'values': {'crop_species': CropSpecies.objects.get(code='flower_001').id},
         }, {
             'name': '葡萄種子',
             'code': 'seed_002',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
+            'values': {'crop_species': CropSpecies.objects.get(code='fluit_001').id},
         }
     ]
-    for seed_dict in seed_item_list:
-        SeedItem.objects.create(**seed_dict)
+    Item.objects.bulk_create(
+        [Item(**item_dict) for item_dict in item_list]
+    )
 
 
 def create_crop_reward_detail():

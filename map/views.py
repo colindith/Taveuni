@@ -10,8 +10,9 @@ from rest_framework.parsers import JSONParser
 from rest_framework import viewsets, mixins, status, filters
 
 from game.utils import load_class
+from game.models import CropSpecies
 from map.models import Map, Cell
-from inventory.models import Slot, SeedItem
+from inventory.models import Slot, Item, SEED
 from map.serializers.serializers import CellSerializer
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,7 @@ class CellViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin,
                   mixins.ListModelMixin, mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin, viewsets.GenericViewSet):
     # TODO: This view set should only return those cells belong to the user
-    queryset = Cell.objects.all()
+    queryset = Cell.objects.all().order_by('id')
     serializer_class = CellSerializer
 
     def create(self, request, *args, **kwargs):
@@ -71,15 +72,15 @@ def seeding(request):
     except (Cell.DoesNotExist, Slot.DoesNotExist):
         return Response('Cell or Slot not found error.', status=400)
 
-    if not isinstance(slot.item, SeedItem):
+    if slot.item.type != SEED:
         print(f'slot.item: {slot.item}')
         return Response('Selected item is not a seed type.', status=400)
 
-    if cell.is_blank_cell():
+    if not cell.is_blank_cell():
         return Response('Selected cell is not blank', status=400)
 
     with transaction.atomic():
-        cell.crop = slot.item.crop_species.create_crop()
+        cell.crop = CropSpecies.objects.get(id=slot.item.values['crop_species']).create_crop()
         cell.save()
         slot.item.delete()
         logger.info(f'Seeding success! {cell.crop.crop_species.name} at '

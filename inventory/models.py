@@ -50,11 +50,6 @@ class Item(models.Model):
     values = postgres_fields.JSONField(null=True, blank=True)
 
 
-class SeedItem(Item):
-    # from game.models import CropSpecies
-    crop_species = models.ForeignKey('game.CropSpecies', on_delete=models.CASCADE)
-
-
 class Inventory(models.Model):
     UNDEFINED = 0
     NOT_FULL = 1

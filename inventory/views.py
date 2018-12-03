@@ -15,7 +15,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 
 class SlotViewSet(viewsets.ModelViewSet):
-    queryset = Slot.objects.all()
+    queryset = Slot.objects.all().order_by('id')
     serializer_class = SlotSerializer
 
 
