@@ -48,12 +48,13 @@ def token(request):
     Gets tokens with username and password. Input should be in the format:
     {"username": "username", "password": "1234abcd"}
     '''
+    print(f'request: {request.data}')
     r = requests.post(
     'http://0.0.0.0:8000/o/token/',
         data={
             'grant_type': 'password',
-            'username': request.data['username'],
-            'password': request.data['password'],
+            'username': request.data.get('username'),
+            'password': request.data.get('password'),
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,
         },

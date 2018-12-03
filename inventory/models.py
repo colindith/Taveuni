@@ -51,6 +51,7 @@ class Item(models.Model):
 
 
 class SeedItem(Item):
+    # from game.models import CropSpecies
     crop_species = models.ForeignKey('game.CropSpecies', on_delete=models.CASCADE)
 
 

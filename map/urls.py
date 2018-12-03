@@ -9,6 +9,6 @@ router.register(r'cell', CellViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('seeding', seeding),
-    path('harvest', harvest),
+    path('seeding/', seeding),
+    path('harvest/', harvest),
 ]

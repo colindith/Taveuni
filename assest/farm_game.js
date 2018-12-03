@@ -11,7 +11,10 @@ const app = new Vue({
       password: ''
     },
     errorMsg: '',
-    selected_slot: null,
+    choice:{
+      selected_slot: null,
+      selected_cell: null
+    },
     cells: [],
     slots : []
   },
@@ -35,7 +38,7 @@ const app = new Vue({
       // console.log(this.user);
       this.$http.post('http://localhost:8000/authentication/token/', JSON.stringify(this.user), {
         // headers: {
-        //   'Content-Type': 'vue-resource/x-www-form-urlencoded'
+        //   'Content-Type': 'application/x-www-form-urlencoded'
         // }
       })
       .then(data => {
@@ -78,16 +81,25 @@ const app = new Vue({
     });
     },
     updateSlot() {
-      // this.$http.get("http://localhost:8000/map/cell")
       axios.get("http://localhost:8000/inventory/slot")
-
-      // .then(response => response.json())
       .then((data) => {
         this.slots = data.data;
+    });
+    },
+    seeding(cell_id) {
+      this.selected_cell = cell_id
+      axios.post("http://localhost:8000/map/seeding/",
+          {slot_id: this.selected_slot, cell_id: cell_id}, {headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded'
+        }})
+      .then((data) => {
+        this.updateSlot();
     });
     }
   },
   mounted() {
+    this.updateCell();
+    this.updateSlot();
     // fetch("http://localhost:8000/map/cell")
     // .then(response => response.json())
     // .then((data) => {
@@ -125,17 +137,20 @@ const app = new Vue({
           <!--<button v-on:click="updateFriend(friend)">save</button>-->
         <!--</div>-->
         <!--<div v-else>-->
-          <button v-on:click="editFriend = friend.article_id">edit</button>
+          <button v-on:click="seeding(cell.id)">播種</button>
           <!--<button v-on:click="deleteFriend(friend.article_id, i)">x</button> -->
           <!--{{friend.article_heading}}-->
         <!--</div>-->
       </li>
       <h1>Inventory: {{ selected_slot }}</h1>
       <form>
-        <li v-for="slot, i in slots">
-          <input type="radio" name="inventory" v-model="selected_slot" :value="slot.id">{{ slot.item.name }}
-          
-        </li>
+        <div style="display:inline;" v-for="slot, i in slots">
+          <div style="display:inline;">
+            <input  type="radio" name="inventory" v-model="selected_slot" :value="slot.id">
+            <div style="display:inline;" v-if="slot.item">{{ slot.item.name }}</div>
+            <div style="display:inline;" v-else>-</div>
+          </div>
+        </div>
       </form>
     </div>
     </div>

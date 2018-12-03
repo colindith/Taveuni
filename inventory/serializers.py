@@ -9,6 +9,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class SlotSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+
     class Meta:
         model = Slot
         fields = '__all__'
