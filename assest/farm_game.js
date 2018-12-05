@@ -130,18 +130,25 @@ const app = new Vue({
     <div>
       
       <h1>Map</h1>
-      <li v-for="cell, i in cells">
-        {{ cell }}
+      <div style="display:inline;" v-for="cell, i in cells">
+        
         <!--<div v-if="editFriend === friend.article_id">-->
           <!--<input v-on:keyup.13="updateFriend" v-model="friend.article_heading" />-->
           <!--<button v-on:click="updateFriend(friend)">save</button>-->
         <!--</div>-->
         <!--<div v-else>-->
-          <button v-on:click="seeding(cell.id)">播種</button>
+          <div style="display:inline;" v-if="cell.crop">
+            <!--<button v-on:click="gathering(cell.id)">收成</button>-->
+            {{ cell.crop.crop_species.name }}
+            {{ cell }}
+          </div>
+          <div style="display:inline;">
+            <button v-on:click="seeding(cell.id)">播種</button>
+          </div>
           <!--<button v-on:click="deleteFriend(friend.article_id, i)">x</button> -->
           <!--{{friend.article_heading}}-->
         <!--</div>-->
-      </li>
+      </div>
       <h1>Inventory: {{ selected_slot }}</h1>
       <form>
         <div style="display:inline;" v-for="slot, i in slots">

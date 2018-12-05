@@ -25,33 +25,6 @@ class CellViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin,
     queryset = Cell.objects.all().order_by('id')
     serializer_class = CellSerializer
 
-    def create(self, request, *args, **kwargs):
-        print(f'in create function')
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-# class SeedingViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin,
-#                      mixins.ListModelMixin, mixins.UpdateModelMixin,
-#                      mixins.DestroyModelMixin, viewsets.GenericViewSet):
-#     # model = Level
-#     # permission_classes = [Or(IsAdmin, IsUserPermitted, IsStaff, IsAgent)]
-#     queryset = Cell.objects.all()
-#     # renderer_classes = [GhostRenderer]
-#     serializer_class = CellSerializer
-#     # filter_class = LevelFilter
-#     # filter_backends = (DjangoFilterBackend,)
-#     # filter_fields = ('name', 'status')
-#     def create(self, request, *args, **kwargs):
-#         print(f'in seeding create function')
-#         print(f'params: {request.data}')
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         # self.perform_create(serializer)
-#         headers = self.get_success_headers(serializer.data)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 @parser_classes(JSONParser)
 @api_view(['POST'])
@@ -90,7 +63,7 @@ def seeding(request):
 
 
 @api_view(['POST'])
-def harvest(request):
+def gathering(request):
     # take cell_id from resuest
     user = request.user
     cell_id = request.POST.get('cell_id')

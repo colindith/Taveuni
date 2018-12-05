@@ -8,11 +8,13 @@ from django.db.models import Max, F
 from django.utils import timezone
 from django.core.cache import cache
 
-from game.models import Cell
-from game.serializers.serializers import CellSerializer
+from game.models import Crop, CropSpecies
+from game.serializers.serializers import CropSerializer
 
 
-class CellViewSet(viewsets.ModelViewSet):
-    queryset = Cell.objects.all()
-    serializer_class = CellSerializer
+class CropViewSet(viewsets.ModelViewSet):
+    queryset = Crop.objects.all()
+    serializer_class = CropSerializer
+
+
 
