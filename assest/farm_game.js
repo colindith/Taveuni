@@ -95,6 +95,16 @@ const app = new Vue({
       .then((data) => {
         this.updateSlot();
     });
+    },
+    gathering(cell_id) {
+      this.selected_cell = cell_id
+      axios.post("http://localhost:8000/map/gathering/",
+          {cell_id: cell_id}, {headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded'
+        }})
+      .then((data) => {
+        this.updateSlot();
+    });
     }
   },
   mounted() {
@@ -130,19 +140,21 @@ const app = new Vue({
     <div>
       
       <h1>Map</h1>
-      <div style="display:inline;" v-for="cell, i in cells">
+      <div v-for="cell, i in cells">
         
         <!--<div v-if="editFriend === friend.article_id">-->
           <!--<input v-on:keyup.13="updateFriend" v-model="friend.article_heading" />-->
           <!--<button v-on:click="updateFriend(friend)">save</button>-->
         <!--</div>-->
         <!--<div v-else>-->
-          <div style="display:inline;" v-if="cell.crop">
-            <!--<button v-on:click="gathering(cell.id)">收成</button>-->
+          <div v-if="cell.crop">
             {{ cell.crop.crop_species.name }}
             {{ cell }}
+            <div v-if="cell.crop.status===2">
+              <button v-on:click="gathering(cell.id)">收成</button>
+            </div>
           </div>
-          <div style="display:inline;">
+          <div style="display:inline;" v-else>
             <button v-on:click="seeding(cell.id)">播種</button>
           </div>
           <!--<button v-on:click="deleteFriend(friend.article_id, i)">x</button> -->

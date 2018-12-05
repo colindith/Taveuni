@@ -36,7 +36,7 @@ class CropSpecies(models.Model):
     def create_crop(self):
         crop_dict = {
             # 'name': self.name,
-            'status': Crop.UNDEFINED,
+            'status': Crop.GROWING,
             'ripening_age': self.base_ripening_age,
             'growing_speed': self.base_growing_speed,
             'age': 0.0,
@@ -77,6 +77,9 @@ class Crop(models.Model):
         verbose_name = 'Plan'
         ordering = ['-created_at']
 
+    def __str__(self):
+        return self.crop_species.name
+
     def is_rippening(self):
         if self.age > self.ripening_age:
             return True
@@ -84,12 +87,12 @@ class Crop(models.Model):
 
     def get_harvest_reward(self):
         # return a list of rewards item objects bur do not delete self
-        try:
-            reward_generator = load_class(self.crop_species.reward_generator)
-        except:
+        reward_generator = load_class(self.crop_species.reward_generator)
+        if not reward_generator:
             from game.libs.crop_reward_generator import default_generator
             reward_generator = default_generator
-        return reward_generator(self.crop_species.reward_choices)
+        print(f'self.crop_species.reward_choices: {self.crop_species.reward_choices.all()}')
+        return reward_generator(self.crop_species.reward_choices.all())
 
 
 class CropSpeciesRewardDetail(models.Model):

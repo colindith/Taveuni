@@ -1,3 +1,5 @@
+import collections
+
 from django.db import models
 from django.contrib.postgres import fields as postgres_fields
 
@@ -29,9 +31,13 @@ class ItemPrototype(models.Model):
 
     def generate_item(self):
         # return a Item objects if success, else False
+
         from game.utils import load_class
         generator = load_class(self.generator)
-        return generator(**self.rules)
+        if not generator:
+            from inventory.libs.item_generator import default_generator
+            generator = default_generator
+        return generator(item_prototype=self, **self.rules)
 
 
 class Item(models.Model):
@@ -65,23 +71,30 @@ class Inventory(models.Model):
     max_slot = models.IntegerField(default=8)
 
     def insert_item(self, item):
+        print(item)
         if not isinstance(item, Item):
             return False
 
         first_blank_slot = self.is_not_full()
+        print(f'first_blank_slot: {first_blank_slot}')
         if not first_blank_slot:
             return False
         first_blank_slot.item = item
         first_blank_slot.save()
+        print('return True')
         return True
 
     def insert_item_list(self, item_list):
-        if not isinstance(item_list, list):
+        if not isinstance(item_list, collections.Iterable):
             return False
+        item_list = list(item_list)
         while len(item_list) != 0:
             # TODO: Handle the case that bags' full before all the items inserted into it
+            print('in while loop')
             item = item_list.pop()
-            self.insert_item(item)
+            if not self.insert_item(item):
+                return False
+        return True
 
     def fetch_item(self, slot: 'Slot'):
         # return Item object if the action success, else False

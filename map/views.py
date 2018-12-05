@@ -53,9 +53,9 @@ def seeding(request):
         return Response('Selected cell is not blank', status=400)
 
     with transaction.atomic():
-        cell.crop = CropSpecies.objects.get(id=slot.item.values['crop_species']).create_crop()
+        cell.crop = CropSpecies.objects.get(code=slot.item.values['crop_species']).create_crop()
         cell.save()
-        slot.item.delete()
+        slot.item.remove()
         logger.info(f'Seeding success! {cell.crop.crop_species.name} at '
                     f'({cell.position_x}, {cell.position_y})')
 
@@ -64,14 +64,14 @@ def seeding(request):
 
 @api_view(['POST'])
 def gathering(request):
-    # take cell_id from resuest
+    # take cell_id from request
     user = request.user
-    cell_id = request.POST.get('cell_id')
+    cell_id = request.data.get('cell_id')
     if not cell_id:
         return Response('Required data not fullfilled.', status=400)
 
     try:
-        cell = Cell.objects.get(id=cell_id, user=user)
+        cell = Cell.objects.get(id=cell_id, map__user=user)
     except (Cell.DoesNotExist, Slot.DoesNotExist):
         return Response('Cell or Slot not found error.', status=400)
 
@@ -81,8 +81,9 @@ def gathering(request):
     with transaction.atomic():
         item_list = cell.crop.get_harvest_reward()
         inventory = user.inventory
-        inventory.insert_item(item_list)
-
+        if not inventory.insert_item_list(item_list):
+            raise Exception
+        print(f'cell: {cell}')
         cell.crop.delete()
 
         # except Exception as e:
