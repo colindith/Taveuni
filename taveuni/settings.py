@@ -45,6 +45,7 @@ START_APPS = [
     'user',
     'inventory',
     'map',
+    'item',
 ]
 
 INSTALLED_APPS += START_APPS

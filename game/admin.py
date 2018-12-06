@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from game.models import Crop, CropSpecies, CropSpeciesRewardDetail
-from inventory.models import ItemPrototype
+from item.models import ItemPrototype
 
 
 class CropAdmin(admin.ModelAdmin):

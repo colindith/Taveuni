@@ -1,11 +1,6 @@
 from rest_framework import serializers
-from inventory.models import Item, ItemPrototype, Slot
-
-
-class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Item
-        fields = '__all__'
+from inventory.models import Slot
+from item.serializers import ItemSerializer
 
 
 class SlotSerializer(serializers.ModelSerializer):

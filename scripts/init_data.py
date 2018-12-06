@@ -1,8 +1,9 @@
 import logging
 
 from map.models import Map, Cell
-from inventory.models import Inventory, Slot, Item, ItemPrototype, KIT, SEED
+from inventory.models import Inventory, Slot
 from game.models import Crop, CropSpecies, CropSpeciesRewardDetail
+from item.models import Item, ItemPrototype, KIT, SEED
 
 logger = logging.getLogger(__name__)
 
@@ -75,6 +76,7 @@ def create_item_prototype():
             'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
+            'reules': {'values': {'crop_species': 'flower_001'}},
 
         }, {
             'name': '向日葵種子',
@@ -88,6 +90,7 @@ def create_item_prototype():
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
+            'reules': {'values': {'crop_species': 'fruilt_001'}},
         }
     ]
     ItemPrototype.objects.bulk_create(
@@ -109,14 +112,14 @@ def create_item():
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
-            'values': {'crop_species': CropSpecies.objects.get(code='flower_001').id},
+            'values': {'crop_species': 'flower_001'},
         }, {
             'name': '葡萄種子',
             'code': 'seed_002',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
-            'values': {'crop_species': CropSpecies.objects.get(code='fluit_001').id},
+            'values': {'crop_species': 'fluit_001'},
         }
     ]
     Item.objects.bulk_create(
@@ -148,7 +151,7 @@ def init_bag():
 
 def main():
     map = create_map()
-    create_cell(map, 10, 10)
+    create_cell(map, 5, 5)
 
     inventory = create_inventory()
     create_slot(inventory)

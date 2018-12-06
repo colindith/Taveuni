@@ -12,7 +12,8 @@ from rest_framework import viewsets, mixins, status, filters
 from game.utils import load_class
 from game.models import CropSpecies
 from map.models import Map, Cell
-from inventory.models import Slot, Item, SEED
+from inventory.models import Slot
+from item.models import Item, SEED
 from map.serializers.serializers import CellSerializer
 
 logger = logging.getLogger(__name__)
@@ -55,7 +56,7 @@ def seeding(request):
     with transaction.atomic():
         cell.crop = CropSpecies.objects.get(code=slot.item.values['crop_species']).create_crop()
         cell.save()
-        slot.item.remove()
+        slot.item.delete()
         logger.info(f'Seeding success! {cell.crop.crop_species.name} at '
                     f'({cell.position_x}, {cell.position_y})')
 

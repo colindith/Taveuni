@@ -2,7 +2,7 @@ import logging
 
 import numpy as np
 
-from inventory.models import Item
+from item.models import Item
 
 logger = logging.getLogger(__name__)
 

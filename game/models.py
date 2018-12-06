@@ -2,7 +2,7 @@ from django.db import models
 # from user.models import User
 
 
-from inventory.models import Item, ItemPrototype
+from item.models import Item, ItemPrototype
 from game.utils import load_class
 
 
