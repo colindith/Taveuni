@@ -11,12 +11,10 @@ const app = new Vue({
       password: ''
     },
     errorMsg: '',
-    choice:{
-      selected_slot: null,
-      selected_cell: null
-    },
+    selected_slot: null,
     cells: [],
-    slots : []
+    slots: [],
+    //state: null,
   },
   methods: {
     // deleteFriend(id, i) {
@@ -86,6 +84,18 @@ const app = new Vue({
         this.slots = data.data;
     });
     },
+    getListIng() {
+      this.updateCell();
+      // 这里是一个http的异步请求
+      if ( true ) {
+        let _this = this;
+        this.timeOut = setTimeout(() => {
+          _this.getListIng();
+        }, 5000);
+      } else {
+        this.timeOut = '';
+      }
+    },
     seeding(cell_id) {
       this.selected_cell = cell_id
       axios.post("http://localhost:8000/map/seeding/",
@@ -94,6 +104,7 @@ const app = new Vue({
         }})
       .then((data) => {
         this.updateSlot();
+        this.updateCell();
     });
     },
     gathering(cell_id) {
@@ -104,6 +115,7 @@ const app = new Vue({
         }})
       .then((data) => {
         this.updateSlot();
+        this.updateCell();
     });
     }
   },
@@ -120,6 +132,30 @@ const app = new Vue({
     // .then((data) => {
     //     this.slots = data;
     // })
+  },
+  created() {
+      if ( this.timeOut ) {
+          clearTimeout(this.timeOut);
+      }
+      this.getListIng();
+  },
+  computed: {
+    timeOut: {
+      set (val) {
+        this.compileTimeout = val;
+      },
+      get() {
+        return this.compileTimeout;
+      }
+    },
+    progesswidth: (width) => {
+      aa = "width: " + width + "%;";
+      console.log(aa);
+      return aa
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.intervalId)
   },
   template: `
     <div>
@@ -150,6 +186,13 @@ const app = new Vue({
           <div v-if="cell.crop">
             {{ cell.crop.crop_species.name }}
             {{ cell }}
+            <div>
+            <b-progress :value="cell.crop.age" :max="cell.crop.ripening_age" show-progress animated></b-progress>
+            </div>
+            <div class="progress">
+              
+              <div class="progress-bar bg-success" role="progressbar" v-bind:style="{ width: cell.crop.age+'%' }" v-bind:aria-valuenow="cell.crop.age" aria-valuemin="0" aria-valuemax="100">{{ cell.crop.age }}%</div>
+            </div>
             <div v-if="cell.crop.status===2">
               <button v-on:click="gathering(cell.id)">收成</button>
             </div>

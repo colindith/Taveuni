@@ -53,7 +53,7 @@ def create_crop_species():
     CropSpecies.objects.create(**crop_species_dict)
     crop_species_dict = {
         'name': '葡萄',
-        'code': 'fluit_001',
+        'code': 'fruit_001',
         'base_ripening_age': 100,
         'base_growing_speed': 1,
         'reward_generator': None
@@ -90,7 +90,7 @@ def create_item_prototype():
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
-            'reules': {'values': {'crop_species': 'fruilt_001'}},
+            'reules': {'values': {'crop_species': 'fruit_001'}},
         }
     ]
     ItemPrototype.objects.bulk_create(
@@ -119,7 +119,7 @@ def create_item():
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
-            'values': {'crop_species': 'fluit_001'},
+            'values': {'crop_species': 'fruit_001'},
         }
     ]
     Item.objects.bulk_create(
@@ -133,7 +133,7 @@ def create_crop_reward_detail():
             'crop_species': CropSpecies.objects.get(code='flower_001'),
             'item_prototype': ItemPrototype.objects.get(code='seed_001'),
         }, {
-            'crop_species': CropSpecies.objects.get(code='fluit_001'),
+            'crop_species': CropSpecies.objects.get(code='fruit_001'),
             'item_prototype': ItemPrototype.objects.get(code='seed_002')
         }
     ]
