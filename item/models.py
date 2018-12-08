@@ -19,7 +19,7 @@ TYPE_OPTIONS = (
 class ItemPrototype(models.Model):
     # TODO: Item should not be in Inventory app
     name = models.CharField(max_length=40)
-    code = models.CharField(max_length=40)
+    code = models.CharField(primary_key=True, max_length=40)
     type = models.IntegerField(default='Item.UNDEFINED', choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
@@ -51,9 +51,11 @@ class Item(models.Model):
     """
 
     name = models.CharField(max_length=40, unique=False, default='none')
-    code = models.CharField(max_length=40, unique=False, default='none')
     type = models.IntegerField(default=UNDEFINED, choices=TYPE_OPTIONS)
     store_price = models.IntegerField(default=2)
     sold_price = models.IntegerField(default=1)
     # prototype = models.ForeignKey(ItemPrototype, related_name='items', on_delete=models.CASCADE)
     values = postgres_fields.JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.name}/{self.id}'

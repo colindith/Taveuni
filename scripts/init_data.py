@@ -1,5 +1,7 @@
 import logging
 
+from django.db import transaction
+
 from map.models import Map, Cell
 from inventory.models import Inventory, Slot
 from game.models import Crop, CropSpecies, CropSpeciesRewardDetail
@@ -41,33 +43,33 @@ def create_slot(inventory):
         Slot.objects.create(inventory=inventory)
     logger.info(f'Create slots success!')
 
-
+# TODO: Move this to fixture
 def create_crop_species():
-    crop_species_dict = {
+    crop_species_dict_list = [{
         'name': '向日葵',
         'code': 'flower_001',
         'base_ripening_age': 75,
         'base_growing_speed': 1,
         'reward_generator': None
-    }
-    CropSpecies.objects.create(**crop_species_dict)
-    crop_species_dict = {
+    }, {
         'name': '葡萄',
         'code': 'fruit_001',
         'base_ripening_age': 100,
         'base_growing_speed': 1,
         'reward_generator': None
-    }
-    CropSpecies.objects.create(**crop_species_dict)
+    }]
+    CropSpecies.objects.bulk_create(
+        [CropSpecies(**crop_species_dict) for crop_species_dict in crop_species_dict_list]
+    )
 
 
-def create_crop():
-    cs_names = ['向日葵', '葡萄']
-    cs_list = list(CropSpecies.objects.filter(name__in=cs_names).distinct('name'))
-    for cs in cs_list:
-        cs.create_crop()
+# def create_crop():
+#     cs_names = ['向日葵', '葡萄']
+#     cs_list = list(CropSpecies.objects.filter(name__in=cs_names).distinct('name'))
+#     for cs in cs_list:
+#         cs.create_crop()
 
-
+# TODO: Move this to fixture
 def create_item_prototype():
     item_prototype_list = [
         {
@@ -76,7 +78,6 @@ def create_item_prototype():
             'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
-            'reules': {'values': {'crop_species': 'flower_001'}},
 
         }, {
             'name': '向日葵種子',
@@ -84,38 +85,42 @@ def create_item_prototype():
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
+            'rules': {'values': {'crop_species': 'flower_001'}},
         }, {
             'name': '葡萄種子',
             'code': 'seed_002',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
-            'reules': {'values': {'crop_species': 'fruit_001'}},
+            'rules': {'values': {'crop_species': 'fruit_001'}},
         }
     ]
-    ItemPrototype.objects.bulk_create(
-        [ItemPrototype(**item_prototype_dict) for item_prototype_dict in item_prototype_list]
-    )
+    # ItemPrototype.objects.bulk_create(
+    #     [ItemPrototype(**item_prototype_dict) for item_prototype_dict in item_prototype_list]
+    # )
+    for item_prototype in item_prototype_list:
+        try:
+            ItemPrototype.objects.create(**item_prototype)
+        except:
+            pass
 
 
+# TODO: Move this to fixture
 def create_item():
     item_list = [
         {
             'name': '青龍偃月刀',
-            'code': 'long_sword_001',
             'type': KIT,
             'store_price': 1000,
             'sold_price': 500,
         }, {
             'name': '向日葵種子',
-            'code': 'seed_001',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
             'values': {'crop_species': 'flower_001'},
         }, {
             'name': '葡萄種子',
-            'code': 'seed_002',
             'type': SEED,
             'store_price': 2000,
             'sold_price': 1000,
@@ -127,6 +132,7 @@ def create_item():
     )
 
 
+# TODO: Move this to fixture
 def create_crop_reward_detail():
     reward_list = [
         {
@@ -150,18 +156,18 @@ def init_bag():
 
 
 def main():
-    map = create_map()
-    create_cell(map, 5, 5)
+        map = create_map()
+        create_cell(map, 5, 5)
 
-    inventory = create_inventory()
-    create_slot(inventory)
+        inventory = create_inventory()
+        create_slot(inventory)
 
-    create_crop_species()
-    create_crop()
+        # create_crop_species()
+        # create_crop()
 
-    create_item_prototype()
-    create_item()
+        # create_item_prototype()
+        # create_item()
+        #
+        # create_crop_reward_detail()
 
-    create_crop_reward_detail()
-
-    init_bag()
+        init_bag()

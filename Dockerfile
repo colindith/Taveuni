@@ -25,4 +25,6 @@ RUN apt-get -y install nodejs
 COPY package.json package.json
 RUN npm install
 
+RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', 'p@ss1234')" | python manage.py shell
+
 COPY . /usr/src/app/

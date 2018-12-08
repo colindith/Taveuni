@@ -1,0 +1,35 @@
+[
+    {
+        "model": "game.cropspeciesrewarddetail",
+        "pk": "1",
+        "fields": {
+            "crop_species": "flower_001",
+            "item_prototype": "seed_001",
+            "weight": 1
+        }
+    }, {
+        "model": "game.cropspeciesrewarddetail",
+        "pk": "2",
+        "fields": {
+            "crop_species": "flower_002",
+            "item_prototype": "seed_002",
+            "weight": 1
+        }
+    }, {
+        "model": "game.cropspeciesrewarddetail",
+        "pk": "3",
+        "fields": {
+            "crop_species": "fruit_001",
+            "item_prototype": "seed_003",
+            "weight": 1
+        }
+    }, {
+        "model": "game.cropspeciesrewarddetail",
+        "pk": "4",
+        "fields": {
+            "crop_species": "fruit_002",
+            "item_prototype": "seed_004",
+            "weight": 1
+        }
+    }
+]

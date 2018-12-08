@@ -26,7 +26,7 @@ class CropSpecies(models.Model):
         CropSpecies Model
     """
     name = models.CharField(max_length=40)
-    code = models.CharField(max_length=40)
+    code = models.CharField(primary_key=True, max_length=40)
     base_ripening_age = models.IntegerField(default=100)
     base_growing_speed = models.FloatField(default=1.0)
 
@@ -74,7 +74,6 @@ class Crop(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Plan'
         ordering = ['-created_at']
 
     def __str__(self):

@@ -7,8 +7,8 @@ import requests
 from .serializers import CreateUserSerializer
 
 
-CLIENT_ID = 'wEJmBVQ5ZERvJSIqdfzfbagOOY4WBkm2bAkNFtxT'
-CLIENT_SECRET = 'qoCmnwYB3376ZMa01iyAftX4cDwstOHku2ZUKSsNfJPMoAJoNDoDAKWMlqb4vMpJRuwyfBC2AVV9McEdbAeuYpcNCWFQlzxFk7PpfS3r9VcKS9gZLdrUMk3RcTdMvQ46'
+CLIENT_ID = '42Pyp5thlDmMWh4Scd5vN3nnlhh8PlxOPpneZDKw'
+CLIENT_SECRET = 'Nvgo7uFV4WFJqcRUqfeKmNPZ24d797BQH3M6Sk87EiV4iOVOZKVeNendVkzDWsyJXPMdfMpa6qJKTX2zVg4lk8LiiN2erG307pBz20Nzz7WgeAsfKnnCIP1XLuUvyYdH'
 
 
 

@@ -1,0 +1,39 @@
+[
+    {
+        "model": "game.cropspecies",
+        "pk": "flower_001",
+        "fields": {
+            "name": "向日葵",
+            "base_ripening_age": 75,
+            "base_growing_speed": 1,
+            "reward_generator": null
+        }
+    }, {
+        "model": "game.cropspecies",
+        "pk": "flower_002",
+        "fields": {
+            "name": "火靈花",
+            "base_ripening_age": 75,
+            "base_growing_speed": 1,
+            "reward_generator": null
+        }
+    }, {
+        "model": "game.cropspecies",
+        "pk": "fruit_001",
+        "fields": {
+            "name": "葡萄",
+            "base_ripening_age": 100,
+            "base_growing_speed": 1,
+            "reward_generator": null
+        }
+    }, {
+        "model": "game.cropspecies",
+        "pk": "fruit_002",
+        "fields": {
+            "name": "橄欖",
+            "base_ripening_age": 125,
+            "base_growing_speed": 1,
+            "reward_generator": null
+        }
+    }
+]

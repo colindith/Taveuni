@@ -36,8 +36,8 @@ class CropSpeciesAdmin(admin.ModelAdmin):
     #     return instance.cell
 
     model = Crop
-    list_display = ['id', 'name', 'code', 'base_ripening_age', 'base_growing_speed']
-    ordering = ['id']
+    list_display = ['name', 'code', 'base_ripening_age', 'base_growing_speed']
+    ordering = ['code']
     inlines = [RewardChoicesInline]
 
 

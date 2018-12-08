@@ -1,0 +1,44 @@
+[
+    {
+        "model": "item.itemprototype",
+        "pk": "seed_001",
+        "fields": {
+            "name": "向日葵種子",
+            "type": 1,
+            "store_price": 2000,
+            "sold_price": 1000,
+            "rules": {"values": {"crop_species": "flower_001"}}
+        }
+    }, {
+        "model": "item.itemprototype",
+        "pk": "seed_002",
+        "fields": {
+            "name": "火靈花種子",
+            "type": 1,
+            "store_price": 2000,
+            "sold_price": 1000,
+            "rules": {"values": {"crop_species": "flower_002"}}
+        }
+    }, {
+        "model": "item.itemprototype",
+        "pk": "seed_003",
+        "fields": {
+            "name": "葡萄種子",
+            "type": 1,
+            "store_price": 2000,
+            "sold_price": 1000,
+            "rules": {"values": {"crop_species": "fruit_001"}}
+        }
+    }, {
+        "model": "item.itemprototype",
+        "pk": "seed_004",
+        "fields": {
+            "name": "橄欖種子",
+            "type": 1,
+            "store_price": 2000,
+            "sold_price": 1000,
+            "rules": {"values": {"crop_species": "fruit_002"}}
+        }
+    }
+
+]

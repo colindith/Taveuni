@@ -12,7 +12,6 @@ def default_generator(item_prototype, **kwargs):
 
     item_dict = {
         'name': item_prototype.name,
-        'code': item_prototype.code,
         'type': item_prototype.type,
         'store_price': item_prototype.store_price,
         'sold_price': item_prototype.sold_price,
