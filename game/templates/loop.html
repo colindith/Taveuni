@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Idle Loops</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+</head>
+<body id="theBody" style="min-width:1210px">
+    <div id="playerInfo" style="width:100%;text-align:center;border-style:dashed;">
+        This player info .... vvvv tttt
+    </div>
+    <div class="investColumn column" style="width:510px;vertical-align:top;">
+        <div class="investContainer">
+            <img class="investImg" id="invest0Img" src="img/adventureGuild.svg">
+
+            <div class="investController">
+                <div class="timeBarContainer">
+                    <div class="timeBar" id="invest0Bar" style="width: 52%;"></div>
+                </div>
+                <div class="upgradeButtonContainer">
+                    <div class="upgradeButton button">
+                        UPGRADE
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="investContainer">
+            column 2
+        </div>
+        <div class="investContainer">
+            column 3
+        </div>
+    </div>
+    <div class="investColumn column" style="width:410px;vertical-align:top;">
+        <div class="investContainer" style="width:410px;vertical-align:top;border-style:dashed;">
+            <div style="width:60px;height:60px;border-style:dashed;">
+                img
+            </div>
+            <div style="width:200px;border-style:dashed;">
+                AAAAA time bar
+            </div>
+        </div>
+        <div class="investContainer" style="width:350px;vertical-align:top;border-style:dashed;">
+            column 2
+        </div>
+        <div class="investContainer" style="width:410px;vertical-align:top;border-style:dashed;">
+            column 3
+        </div>
+    </div>
+    <script src="src/game.js"></script>
+    <!--<script src="src/driver.js"></script>-->
+    <script src="src/main.js"></script>
+    <!--<script>-->
+        <!--function startGame () {-->
+            <!--if (isFileSystem) {-->
+            <!--} else {-->
+                <!--window.doWork = new Worker('interval.js');-->
+                <!--window.doWork.onmessage = function (event) {-->
+                    <!--if (event.data === 'interval.start') {-->
+                        <!--tick();-->
+                        <!--// How it knows this `tick` is tick in driver??-->
+                    <!--}-->
+                <!--};-->
+            <!--}-->
+            <!--displayBetaSaveNote();-->
+            <!--load();-->
+        <!--}-->
+        <!--$(function() {-->
+            <!--// Localization.init();-->
+            <!--// window._txt = Localization.txt; // binding the _txt function for simplier use-->
+            <!--// window._txtsObj = Localization.txtsObj; // binding the _txt function for simplier use-->
+            <!--// Localization.loadLib('game',function() { // we load the "game.xml" library, then startup the game.-->
+            <!--//     Views.draw();-->
+            <!--//     Localization.localizePage("game");-->
+                <!--startGame();-->
+            <!--// });-->
+        <!--})-->
+    <!--</script>-->
+</body>
+</html>
