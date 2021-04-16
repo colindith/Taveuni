@@ -1,5 +1,5 @@
 ipython==7.0.1
 ipython-genutils==0.2.0
 django-silk==3.0.1
-django-debug-toolbar==1.10.1
+django-debug-toolbar==1.11.1
 django-queryinspect==1.0.0
